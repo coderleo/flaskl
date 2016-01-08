@@ -1,4 +1,5 @@
 import os
+import pymysql
 base_dir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
@@ -24,7 +25,8 @@ class Config:
 class DevelopmentConfig(Config):
 	DEBUG = True
 	SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') \
-	or 'sqlite:///' + os.path.join(base_dir,'data-dev.sqlite')
+    or 'mysql+pymysql://root:123456@127.0.0.1:3306/flaskl_db'
+	#or 'mysql+pymysql://root:123456@server/flaskl_db'
 class TestingConfig(Config):
 	TESTING = True
 	SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') \
