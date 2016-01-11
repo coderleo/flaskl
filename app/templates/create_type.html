@@ -1,0 +1,15 @@
+<form name='create' method='post' action='{{url_for('.create_type')}}'>
+<div>
+类型名称：	
+{{form.title}}
+ {{ form.hidden_tag() }}
+</div>
+<div>
+类型描述：	
+{{form.description}}
+</div>
+<div>
+	
+{{form.submit}}
+</div>
+</form>

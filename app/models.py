@@ -11,7 +11,9 @@ class Entity(db.Model):
 class ArticleType(Entity):
 	__tablename__ = 'articletypes'
 	title = db.Column(db.String(100),nullable = False)
+	description = db.Column(db.String(1000))
 	articles = db.relationship('Article',backref = 'articletype',lazy = 'dynamic')
+	
 class Article(Entity):
 	__tablename__ = 'articles'
 	title = db.Column(db.String(100),nullable = False)

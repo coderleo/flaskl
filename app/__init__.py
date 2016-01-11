@@ -3,9 +3,13 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from config import config
 print 'start app'
 db = SQLAlchemy()
+from .article import article as article_blueprint
+
 def create_app(config_name):
 	app = Flask(__name__)
 	db.init_app(app)
 	app.config.from_object(config[config_name])
 	config[config_name].init_app(app)
+	from .article import article as article_blueprint
+	app.register_blueprint(article_blueprint,url_prefix = '/article')
 	return app
