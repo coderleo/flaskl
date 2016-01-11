@@ -11,12 +11,14 @@ def index():
 @article.route('/type/create',methods=['GET','POST'])
 def create_type():
 	form = TypeForm()
-	print form.errors
+ 
 	if form.validate_on_submit():
-		print 'ccc'
-		type = ArticleType(title=form.data.title,description = form.data.description,modified_time=datetime.now())
+		print form.title.data
+		type = ArticleType(title=form.title.data,description = form.description.data,modified_time=datetime.now())
 		print 'bbb'
 		db.session.add(type)
 		db.session.commit()
 	print 'bbb'
 	return render_template('create_type.html',form = form)
+@article.route('/type')
+def index_type():
