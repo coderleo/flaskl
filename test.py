@@ -1,8 +1,11 @@
-def fuc1(*arg):
-	print arg
-
-def run(f,*arg):
-	f(arg)
-
-if __name__=='__main__':
-	run(fuc1)
+#coding='utf-8'
+class people:
+    names = ['jack','leo']      
+    age = 1
+    def printName(self):
+    	self.names.append('wy')
+    	self.age = 2
+        print self.names,self.age
+people().printName()
+print people.names
+print people.age
