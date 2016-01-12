@@ -7,7 +7,7 @@ from .. import db
 
 @article.route('/')
 def index():
-	list =Article.query.all()
+	list =Article.query.join(ArticleType).all()
 	return render_template('article_list.html',list = list)
 @article.route('/create',methods=['GET','POST'])
 def create():
