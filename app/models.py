@@ -13,7 +13,7 @@ class ArticleType(Entity):
 	title = db.Column(db.String(100),nullable = False)
 	description = db.Column(db.String(1000))
 	articles = db.relationship('Article',backref = 'articletype',lazy = 'dynamic')
-	
+	test_id = db.Column(db.Integer,db.ForeignKey('tests.id'))
 class Article(Entity):
 	__tablename__ = 'articles'
 	title = db.Column(db.String(100),nullable = False)
@@ -37,3 +37,7 @@ class Action(Entity):
 	name = db.Column(db.String(10),nullable = False)
 	module_id = db.Column(db.String(10),nullable= False)
 	order = db.Column(db.Integer)
+class Test(Entity):
+	__tablename__ = 'tests'
+	title = db.Column(db.String(10))
+	types = db.relationship('ArticleType',backref = 'test',lazy = 'dynamic')

@@ -4,10 +4,10 @@ from .forms import TypeForm, ArticleForm
 from ..models import ArticleType,Article
 from datetime import datetime
 from .. import db
-
+from sqlalchemy.orm import joinedload,subqueryload
 @article.route('/')
 def index():
-	list =Article.query.join(ArticleType).all()
+	list =Article.query.options(joinedload('articletype').joinedload('test')).all()
 	return render_template('article_list.html',list = list)
 @article.route('/create',methods=['GET','POST'])
 def create():
