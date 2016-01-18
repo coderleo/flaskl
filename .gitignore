@@ -1,5 +1,5 @@
 *.py[cod]
-
+/migrations
 # C extensions
 *.so
 

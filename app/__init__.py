@@ -11,5 +11,8 @@ def create_app(config_name):
 	app.config.from_object(config[config_name])
 	config[config_name].init_app(app)
 	from .article import article as article_blueprint
+	from .auth import auth as auth_blueprint
+	
 	app.register_blueprint(article_blueprint,url_prefix = '/article')
+	app.register_blueprint(auth_blueprint,url_prefix='/auth')
 	return app

@@ -1,5 +1,5 @@
 from . import db
-print 'start model'
+from werkzeug.security import check_password_hash,generate_password_hash
 class Entity(db.Model):
 	__abstract__  = True
 	id = db.Column(db.Integer,primary_key = True)
@@ -26,8 +26,17 @@ users_powers = db.Table('users_powers',db.Column('power_id',db.Integer,db.Foreig
 class User(Entity):
 	__tablename__ = 'users'
 	name = db.Column(db.String(10),nullable = False)
-	password = db.Column(db.String(100))
+	password_hash = db.Column(db.String(128))
 	powers = db.relationship('Power',secondary = users_powers,backref='users')
+	email = db.Column(db.String(128))
+	@property
+	def password(self):
+		raise AttributeError("password is not readable attribute")
+	@password.setter 
+	def password(self,pwd):
+		self.password_hash = generate_password_hash(pwd)
+	def validate_user(self,pwd):
+		return check_password_hash(self.password_hash, pwd)
 class Power(Entity):
 	__tablename__ = 'powers'
 	name = db.Column(db.String(10),nullable = False)

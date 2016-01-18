@@ -6,6 +6,9 @@ class people:
     	self.names.append('wy')
     	self.age = 2
         print self.names,self.age
-people().printName()
-print people.names
+p = people()
+#p.age=2
 print people.age
+#print people.names
+print p.age
+#
