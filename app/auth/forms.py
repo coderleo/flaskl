@@ -10,3 +10,7 @@ class RegistrationForm(Form):
 	pwd = PasswordField('password',validators=[Required(),EqualTo('pwd2',message='Passwords must match.')])
 	pwd2 = PasswordField('Confirm password',validators=[Required()])
 	submit = SubmitField('Register')
+class LoginForm(Form):
+	username = StringField("Username",validators=[Required(),Length(1,64),Regexp('^[A-Za-z][A-Za-z0-9_.]*$',0,'user name is ')])
+	pwd = PasswordField('password',validators=[Required()])
+	submit = SubmitField('Register')

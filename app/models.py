@@ -1,5 +1,6 @@
-from . import db
+from . import db,login_manager
 from werkzeug.security import check_password_hash,generate_password_hash
+from flask.ext.login import UserMixin,AnonymousUserMixin
 class Entity(db.Model):
 	__abstract__  = True
 	id = db.Column(db.Integer,primary_key = True)
@@ -23,7 +24,7 @@ class Article(Entity):
 	type_id = db.Column(db.Integer,db.ForeignKey('articletypes.id'))
 	
 users_powers = db.Table('users_powers',db.Column('power_id',db.Integer,db.ForeignKey('powers.id'),nullable=False),db.Column('user_id',db.Integer,db.ForeignKey('users.id'),nullable=False))
-class User(Entity):
+class User(UserMixin,Entity):
 	__tablename__ = 'users'
 	name = db.Column(db.String(10),nullable = False)
 	password_hash = db.Column(db.String(128))
@@ -50,3 +51,14 @@ class Test(Entity):
 	__tablename__ = 'tests'
 	title = db.Column(db.String(10))
 	types = db.relationship('ArticleType',backref = 'test',lazy = 'dynamic')
+class AnonymousUser(AnonymousUserMixin):
+	def can(self, permissions):
+		return False
+
+	def is_administrator(self):
+	    return False
+
+login_manager.anonymous_user = AnonymousUser
+@login_manager.user_loader
+def load_user(user_id):
+	return User.query.get(int(user_id))
